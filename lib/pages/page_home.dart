@@ -23,6 +23,8 @@ class _PageHomeState extends State<PageHome> {
   TransportChoix transportChoix = TransportChoix.Avion;
   //Switch
   bool sondage = false;
+  //Slider
+  double perimetre = 0.0;
 
   @override
   Widget build(BuildContext context) {
@@ -112,6 +114,23 @@ class _PageHomeState extends State<PageHome> {
                   inactiveTrackColor: Colors.red,
                 ),
                 Text((sondage) ? "Pour" : "Contre"),
+                Slider(
+                  value: perimetre,
+                  onChanged: (double d){
+                    setState(() {
+                      perimetre = d;
+                    });
+                  },
+                  min: 0,
+                  max: 100,
+                  divisions: 10,
+                  label: perimetre.toString(),
+                  activeColor: Colors.black45,
+                  inactiveColor: Colors.pink,
+                ),
+                Text("Périmètre = ${perimetre.toStringAsFixed(2)}"),
+                Text("Périmètre = ${perimetre.toInt()}"),
+
 
               ],
             ),
