@@ -8,6 +8,9 @@ class PageHome extends StatefulWidget {
 }
 
 class _PageHomeState extends State<PageHome> {
+  //TextField
+  String? email;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -17,7 +20,19 @@ class _PageHomeState extends State<PageHome> {
       body: Center(
         child: Column(
           children: [
-
+            TextField(
+              decoration: InputDecoration(
+                labelText: "Entrez votre Email",
+                hintText: "test@test.com"
+              ),
+              onChanged: (String value){
+                setState(() {
+                  email = value;
+                });
+              },
+              keyboardType: TextInputType.emailAddress,
+            ),
+            Text("Votre mail est ${email}")
           ],
         ),
       )
