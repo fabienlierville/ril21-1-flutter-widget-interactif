@@ -19,9 +19,10 @@ class _PageHomeState extends State<PageHome> {
     "Yaourt": false,
     "Pain": false,
   };
-
   //Radio
   TransportChoix transportChoix = TransportChoix.Avion;
+  //Switch
+  bool sondage = false;
 
   @override
   Widget build(BuildContext context) {
@@ -98,7 +99,20 @@ class _PageHomeState extends State<PageHome> {
                     ),
                     Text("Bateau"),
                   ],
-                )
+                ),
+                Switch(
+                    value: sondage,
+                    onChanged: (bool b){
+                      setState(() {
+                        sondage = b;
+                        print(sondage);
+                      });
+                    },
+                  activeColor: Colors.green,
+                  inactiveTrackColor: Colors.red,
+                ),
+                Text((sondage) ? "Pour" : "Contre"),
+
               ],
             ),
           )
