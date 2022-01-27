@@ -13,38 +13,44 @@ class _PageHomeState extends State<PageHome> {
   bool obscureText = true;
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text("Widgets Interactifs"),
-      ),
-      body: Center(
-        child: Column(
-          children: [
-            TextField(
-              decoration: InputDecoration(
-                labelText: "Entrez votre Email",
-                hintText: "test@test.com",
-                suffixIcon: IconButton(
-                   icon:(obscureText) ? Icon(Icons.visibility_off) : Icon(Icons.visibility),
-                  onPressed: (){
-                     setState(() {
-                       obscureText = !obscureText;
-                     });
+    return GestureDetector(
+      onTap: (){
+        FocusScope.of(context).requestFocus(FocusNode());
+      },
+      child:Scaffold(
+          appBar: AppBar(
+            title: Text("Widgets Interactifs"),
+          ),
+          body: Center(
+            child: Column(
+              children: [
+                TextField(
+                  textInputAction: TextInputAction.next,
+                  decoration: InputDecoration(
+                      labelText: "Entrez votre Email",
+                      hintText: "test@test.com",
+                      suffixIcon: IconButton(
+                        icon:(obscureText) ? Icon(Icons.visibility_off) : Icon(Icons.visibility),
+                        onPressed: (){
+                          setState(() {
+                            obscureText = !obscureText;
+                          });
+                        },
+                      )
+                  ),
+                  onChanged: (String value){
+                    setState(() {
+                      email = value;
+                    });
                   },
-                )
-              ),
-              onChanged: (String value){
-                setState(() {
-                  email = value;
-                });
-              },
-              keyboardType: TextInputType.emailAddress,
-              obscureText: obscureText,
+                  keyboardType: TextInputType.emailAddress,
+                  obscureText: obscureText,
+                ),
+                Text("Votre mail est ${email}")
+              ],
             ),
-            Text("Votre mail est ${email}")
-          ],
-        ),
-      )
-    );
+          )
+      ) ,
+    ) ;
   }
 }
