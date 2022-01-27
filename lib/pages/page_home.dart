@@ -25,6 +25,8 @@ class _PageHomeState extends State<PageHome> {
   bool sondage = false;
   //Slider
   double perimetre = 0.0;
+  //Date
+  DateTime? dateNaissance;
 
   @override
   Widget build(BuildContext context) {
@@ -114,22 +116,27 @@ class _PageHomeState extends State<PageHome> {
                   inactiveTrackColor: Colors.red,
                 ),
                 Text((sondage) ? "Pour" : "Contre"),
-                Slider(
-                  value: perimetre,
-                  onChanged: (double d){
-                    setState(() {
-                      perimetre = d;
-                    });
-                  },
-                  min: 0,
-                  max: 100,
-                  divisions: 10,
-                  label: perimetre.toString(),
-                  activeColor: Colors.black45,
-                  inactiveColor: Colors.pink,
-                ),
+                RotatedBox(
+                  quarterTurns: 0,
+                  child:Slider(
+                    value: perimetre,
+                    onChanged: (double d){
+                      setState(() {
+                        perimetre = d;
+                      });
+                    },
+                    min: 0,
+                    max: 100,
+                    divisions: 10,
+                    label: perimetre.toString(),
+                    activeColor: Colors.black45,
+                    inactiveColor: Colors.pink,
+                  ) ,
+                )
+                ,
                 Text("Périmètre = ${perimetre.toStringAsFixed(2)}"),
                 Text("Périmètre = ${perimetre.toInt()}"),
+
 
 
               ],
@@ -169,6 +176,21 @@ class _PageHomeState extends State<PageHome> {
     return l;
   }
 
+
+  Future<void> selectionDate() async{
+    DateTime? datechoisie = await showDatePicker(
+        context: context,
+        initialDate: DateTime.now(),
+        firstDate: DateTime(1983),
+        lastDate: DateTime(2020)
+    );
+
+    if(datechoisie != null){
+      setState(() {
+        dateNaissance = datechoisie;
+      });
+    }
+  }
 
 }
 
