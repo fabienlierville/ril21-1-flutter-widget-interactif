@@ -10,7 +10,7 @@ class PageHome extends StatefulWidget {
 class _PageHomeState extends State<PageHome> {
   //TextField
   String? email;
-
+  bool obscureText = true;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -24,7 +24,14 @@ class _PageHomeState extends State<PageHome> {
               decoration: InputDecoration(
                 labelText: "Entrez votre Email",
                 hintText: "test@test.com",
-                suffixIcon: Icon(Icons.remove_red_eye)
+                suffixIcon: IconButton(
+                   icon:(obscureText) ? Icon(Icons.visibility_off) : Icon(Icons.visibility),
+                  onPressed: (){
+                     setState(() {
+                       obscureText = !obscureText;
+                     });
+                  },
+                )
               ),
               onChanged: (String value){
                 setState(() {
@@ -32,7 +39,7 @@ class _PageHomeState extends State<PageHome> {
                 });
               },
               keyboardType: TextInputType.emailAddress,
-              obscureText: true,
+              obscureText: obscureText,
             ),
             Text("Votre mail est ${email}")
           ],
