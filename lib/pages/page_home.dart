@@ -11,13 +11,25 @@ class _PageHomeState extends State<PageHome> {
   //TextField
   String? email;
   bool obscureText = true;
+
+  //CheckBox
+  Map<String, bool> listCourse = {
+    "Carottes": false,
+    "Bananes": false,
+    "Yaourt": false,
+    "Pain": false,
+  };
+
+  //Radio
+  TransportChoix transportChoix = TransportChoix.Avion;
+
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: (){
+      onTap: () {
         FocusScope.of(context).requestFocus(FocusNode());
       },
-      child:Scaffold(
+      child: Scaffold(
           appBar: AppBar(
             title: Text("Widgets Interactifs"),
           ),
@@ -30,15 +42,16 @@ class _PageHomeState extends State<PageHome> {
                       labelText: "Entrez votre Email",
                       hintText: "test@test.com",
                       suffixIcon: IconButton(
-                        icon:(obscureText) ? Icon(Icons.visibility_off) : Icon(Icons.visibility),
-                        onPressed: (){
+                        icon: (obscureText) ? Icon(Icons.visibility_off) : Icon(
+                            Icons.visibility),
+                        onPressed: () {
                           setState(() {
                             obscureText = !obscureText;
                           });
                         },
                       )
                   ),
-                  onChanged: (String value){
+                  onChanged: (String value) {
                     setState(() {
                       email = value;
                     });
@@ -46,11 +59,88 @@ class _PageHomeState extends State<PageHome> {
                   keyboardType: TextInputType.emailAddress,
                   obscureText: obscureText,
                 ),
-                Text("Votre mail est ${email}")
+                Text("Votre mail est ${email}"),
+                Container(
+                  child: Column(
+                    children: courses(),
+                  ),
+                ),
+                Row(
+                  children: [
+                    Radio(
+                      value: TransportChoix.Avion ,
+                      onChanged: (TransportChoix? c){
+                        setState(() {
+                          transportChoix = c!;
+                        });
+                      },
+                      groupValue: transportChoix,
+                    ),
+                    Text("Avion"),
+                    Radio(
+                      value: TransportChoix.Voiture ,
+                      onChanged: (TransportChoix? c){
+                        setState(() {
+                          transportChoix = c!;
+                        });
+                      },
+                      groupValue: transportChoix,
+                    ),
+                    Text("Voiture"),
+                    Radio(
+                      value: TransportChoix.Bateau ,
+                      onChanged: (TransportChoix? c){
+                        setState(() {
+                          transportChoix = c!;
+                        });
+                      },
+                      groupValue: transportChoix,
+                    ),
+                    Text("Bateau"),
+                  ],
+                )
               ],
             ),
           )
-      ) ,
-    ) ;
+      ),
+    );
   }
+
+  // Carottes [] -> Row
+  // Yaourt [] -> Row
+  List<Row> courses() {
+    List<Row> l = [];
+    listCourse.forEach((aliment, panier) {
+      Row r = Row(
+        children: [
+          Text(
+            aliment, style:
+          TextStyle(
+              color: (panier) ? Colors.green : Colors.red,
+            decoration: (panier) ? TextDecoration.lineThrough : TextDecoration.none
+            ),
+
+          ),
+          Checkbox(
+              value: panier,
+              onChanged: (bool? b) {
+                setState(() {
+                  listCourse[aliment] = b!;
+                });
+              }
+          ),
+        ],
+      );
+      l.add(r);
+    });
+    return l;
+  }
+
+
+}
+
+enum TransportChoix{
+  Voiture,
+  Avion,
+  Bateau
 }
