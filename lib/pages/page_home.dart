@@ -23,7 +23,8 @@ class _PageHomeState extends State<PageHome> {
             TextField(
               decoration: InputDecoration(
                 labelText: "Entrez votre Email",
-                hintText: "test@test.com"
+                hintText: "test@test.com",
+                suffixIcon: Icon(Icons.remove_red_eye)
               ),
               onChanged: (String value){
                 setState(() {
@@ -31,6 +32,7 @@ class _PageHomeState extends State<PageHome> {
                 });
               },
               keyboardType: TextInputType.emailAddress,
+              obscureText: true,
             ),
             Text("Votre mail est ${email}")
           ],
