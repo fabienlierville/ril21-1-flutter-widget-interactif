@@ -132,10 +132,25 @@ class _PageHomeState extends State<PageHome> {
                     activeColor: Colors.black45,
                     inactiveColor: Colors.pink,
                   ) ,
-                )
-                ,
+                ),
                 Text("Périmètre = ${perimetre.toStringAsFixed(2)}"),
                 Text("Périmètre = ${perimetre.toInt()}"),
+                ElevatedButton(
+                    onPressed: selectionDate,
+                    child: Text("Choisir Date")
+                ),
+                Text("DateNAissance = ${dateNaissance}"),
+                ElevatedButton(
+                    onPressed: ()async{
+                      DateTime? date = await selectionDate2();
+                      if(date != null){
+                        setState(() {
+                          dateNaissance = date;
+                        });
+                      }
+                    },
+                    child: Text("Choisir Date 2 ")
+                ),
 
 
 
@@ -182,14 +197,36 @@ class _PageHomeState extends State<PageHome> {
         context: context,
         initialDate: DateTime.now(),
         firstDate: DateTime(1983),
-        lastDate: DateTime(2020)
+        lastDate: DateTime(2040),
+      initialDatePickerMode: DatePickerMode.year
     );
 
     if(datechoisie != null){
-      setState(() {
-        dateNaissance = datechoisie;
-      });
+      TimeOfDay? heure = await showTimePicker(
+          context: context,
+          initialTime: TimeOfDay(hour: 10, minute: 15)
+      );
+
+      if(heure != null){
+        datechoisie = datechoisie.add(Duration(hours: heure.hour, minutes: heure.minute));
+        setState(() {
+          dateNaissance = datechoisie;
+        });
+      }
+
+
     }
+  }
+
+  Future<DateTime?> selectionDate2() async{
+    DateTime? datechoisie = await showDatePicker(
+        context: context,
+        initialDate: DateTime.now(),
+        firstDate: DateTime(1983),
+        lastDate: DateTime(2040)
+    );
+
+    return datechoisie;
   }
 
 }
